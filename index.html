@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,22 +35,11 @@
         section {
             margin-bottom: 20px;
         }
-        .bmi-section, .alternative-section {
+        .bmi-section, .alternative-section, .body-type-section, .yoga-section {
             background-color: #ffffff; /* White background for sections */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .food-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .food-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
         }
     </style>
 </head>
@@ -60,6 +50,8 @@
             <ul>
                 <li><a href="#alternatives">Food Alternatives</a></li>
                 <li><a href="#bmi">BMI Calculator</a></li>
+                <li><a href="#body-type">Body Type Calculator</a></li>
+                <li><a href="#yoga">Basic Yoga</a></li>
             </ul>
         </nav>
     </header>
@@ -69,33 +61,78 @@
             <form id="alternativeForm">
                 <label for="junkFood">Select Junk Food:</label>
                 <select id="junkFood" name="junkFood" onchange="showAlternative()">
-                    <option value="">--Select--</option>
-                    <option value="potatoChips">Potato Chips</option>
-                    <option value="soda">Soda</option>
-                    <option value="burger">Burger</option>
-                    <!-- Add more options here -->
-                </select>
+					<option value="">--Select--</option>
+					<option value="potatoChips">Potato Chips</option>
+					<option value="soda">Soda</option>
+					<option value="burger">Burger</option>
+					<option value="frenchFries">French Fries</option>
+					<option value="iceCream">Ice Cream</option>
+					<option value="candyBars">Candy Bars</option>
+					<option value="pizza">Pizza</option>
+					<option value="sugaryCereals">Sugary Cereals</option>
+					<option value="donuts">Donuts</option>
+					<option value="nachos">Nachos</option>
+					<option value="milkshakes">Milkshakes</option>
+				</select>
             </form>
             <div id="alternativeResult"></div>
         </section>
         <section id="bmi" class="bmi-section">
-            <h2>Calculate Your BMI</h2>
-            <form id="bmiForm">
-                <label for="height">Height (cm):</label>
-                <input type="number" id="height" name="height" required>
-                <br>
-                <label for="weight">Weight (kg):</label>
-                <input type="number" id="weight" name="weight" required>
-                <br>
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-                <br>
-                <button type="button" onclick="calculateBMI()">Calculate BMI</button>
-            </form>
-            <p id="bmiResult"></p>
+			<h2>Calculate Your BMI</h2>
+			<form id="bmiForm">
+				<label for="height">Height (cm):</label>
+				<input type="number" id="height" name="height" value="170" required>
+				<br>
+				<label for="weight">Weight (kg):</label>
+				<input type="number" id="weight" name="weight" value="70" required>
+				<br>
+				<label for="gender">Gender:</label>
+				<select id="gender" name="gender" required>
+					<option value="male" selected>Male</option>
+					<option value="female">Female</option>
+				</select>
+				<br>
+				<button type="button" onclick="calculateBMI()">Calculate BMI</button>
+			</form>
+			<p id="bmiResult"></p>
+		</section>
+        <section id="body-type" class="body-type-section">
+			<h2>Determine Your Body Type</h2>
+			<form id="bodyTypeForm">
+				<label for="shoulderWidth">Shoulder Width (cm):</label>
+				<input type="number" id="shoulderWidth" name="shoulderWidth" value="45" required>
+				<br>
+				<label for="waistWidth">Waist Width (cm):</label>
+				<input type="number" id="waistWidth" name="waistWidth" value="30" required>
+				<br>
+				<label for="hipWidth">Hip Width (cm):</label>
+				<input type="number" id="hipWidth" name="hipWidth" value="40" required>
+				<br>
+				<label for="genderBodyType">Gender:</label>
+				<select id="genderBodyType" name="genderBodyType" required>
+					<option value="male" selected>Male</option>
+					<option value="female">Female</option>
+				</select>
+				<br>
+				<button type="button" onclick="calculateBodyType()">Determine Body Type</button>
+			</form>
+			<p id="bodyTypeResult"></p>
+			<div id="bodyTypeDescription"></div>
+		</section>
+        <section id="yoga" class="yoga-section">
+            <h2>Basic Yoga for All Age Groups</h2>
+            <ol>
+                <li>Pranayam</li>
+                <li>Anulom Vilom</li>
+                <li>Sukhasan</li>
+                <li>Parivritta Sukhasan</li>
+                <li>Badhakonasan</li>
+                <li>Bidalasana-Bitilasana</li>
+                <li>Tadasana</li>
+                <li>Trikonasana</li>
+                <li>Vrikshaasan</li>
+                <li>Shavaasan</li>
+            </ol>
         </section>
     </main>
     <footer>
@@ -123,51 +160,98 @@
         }
 
         function showAlternative() {
-            const junkFood = document.getElementById('junkFood').value;
-            let alternative = '';
-            
-            switch (junkFood) {
-                case 'potatoChips':
-                    alternative = `
-                        <div class="food-item">
-                            <img src="https://via.placeholder.com/100?text=Potato+Chips" alt="Potato Chips">
-                            <div>
-                                <p>Alternative: Baked Kale Chips</p>
-                                <p>Why: Kale chips are lower in calories and higher in nutrients.</p>
-                                <img src="https://via.placeholder.com/100?text=Kale+Chips" alt="Kale Chips">
-                            </div>
-                        </div>`;
-                    break;
-                case 'soda':
-                    alternative = `
-                        <div class="food-item">
-                            <img src="https://via.placeholder.com/100?text=Soda" alt="Soda">
-                            <div>
-                                <p>Alternative: Sparkling Water with Lemon</p>
-                                <p>Why: Sparkling water is free of added sugars and calories.</p>
-                                <img src="https://via.placeholder.com/100?text=Sparkling+Water" alt="Sparkling Water">
-                            </div>
-                        </div>`;
-                    break;
-                case 'burger':
-                    alternative = `
-                        <div class="food-item">
-                            <img src="https://via.placeholder.com/100?text=Burger" alt="Burger">
-                            <div>
-                                <p>Alternative: Grilled Chicken Sandwich</p>
-                                <p>Why: Grilled chicken is lower in fat and calories compared to a beef burger.</p>
-                                <img src="https://via.placeholder.com/100?text=Grilled+Chicken" alt="Grilled Chicken Sandwich">
-                            </div>
-                        </div>`;
-                    break;
-                // Add more cases here
-                default:
-                    alternative = 'Please select a junk food item to see its healthy alternative.';
+    const junkFood = document.getElementById('junkFood').value;
+    let alternative = '';
+    
+    switch (junkFood) {
+        case 'potatoChips':
+            alternative = `
+                <p>Alternative: Baked Kale Chips</p>
+                <p>Why: Kale chips are lower in calories and higher in nutrients.</p>`;
+            break;
+        case 'soda':
+            alternative = `
+                <p>Alternative: Sparkling Water with Lemon</p>
+                <p>Why: Sparkling water is free of added sugars and calories.</p>`;
+            break;
+        case 'burger':
+            alternative = `
+                <p>Alternative: Grilled Chicken Sandwich</p>
+                <p>Why: Grilled chicken is lower in fat and calories compared to a beef burger.</p>`;
+            break;
+        case 'frenchFries':
+            alternative = `
+                <p>Alternative: Baked Sweet Potato Fries</p>
+                <p>Why: Sweet potatoes are higher in fiber and vitamins compared to regular potatoes, and baking reduces the amount of unhealthy fats.</p>`;
+            break;
+        case 'iceCream':
+            alternative = `
+                <p>Alternative: Frozen Yogurt or Banana Ice Cream</p>
+                <p>Why: Frozen yogurt and banana ice cream are lower in fat and calories and can be made with natural sweeteners.</p>`;
+            break;
+        case 'candyBars':
+            alternative = `
+                <p>Alternative: Dark Chocolate or Homemade Energy Bars</p>
+                <p>Why: Dark chocolate contains antioxidants and less sugar, while homemade energy bars can be made with healthy ingredients like nuts and dried fruits.</p>`;
+            break;
+        case 'pizza':
+            alternative = `
+                <p>Alternative: Cauliflower Crust Pizza or Whole Wheat Pizza</p>
+                <p>Why: Cauliflower crust and whole wheat crust are lower in carbs and higher in fiber, making them healthier options.</p>`;
+            break;
+        case 'sugaryCereals':
+            alternative = `
+                <p>Alternative: Oatmeal with Fresh Fruit</p>
+                <p>Why: Oatmeal is high in fiber and can be sweetened naturally with fresh fruits, providing a healthier start to the day.</p>`;
+            break;
+        case 'donuts':
+            alternative = `
+                <p>Alternative: Baked Donuts or Whole Grain Muffins</p>
+                <p>Why: Baked donuts and whole grain muffins are lower in fat and can be made with healthier ingredients.</p>`;
+            break;
+        case 'nachos':
+            alternative = `
+                <p>Alternative: Baked Tortilla Chips with Salsa or Guacamole</p>
+                <p>Why: Baked tortilla chips are lower in fat, and salsa or guacamole provide healthy nutrients.</p>`;
+            break;
+        case 'milkshakes':
+            alternative = `
+                <p>Alternative: Smoothies with Greek Yogurt and Fresh Fruit</p>
+                <p>Why: Smoothies made with Greek yogurt and fresh fruit are lower in sugar and provide protein and vitamins.</p>`;
+            break;
+        default:
+            alternative = 'Please select a junk food item to see its healthy alternative.';
+    }
+    
+    document.getElementById('alternativeResult').innerHTML = alternative;
+}
+
+        function calculateBodyType() {
+            const shoulderWidth = document.getElementById('shoulderWidth').value;
+            const waistWidth = document.getElementById('waistWidth').value;
+            const hipWidth = document.getElementById('hipWidth').value;
+            const gender = document.getElementById('genderBodyType').value;
+
+            let bodyType = '';
+            let bodyTypeDescription = '';
+
+            if (shoulderWidth > hipWidth && waistWidth < shoulderWidth) {
+                bodyType = 'Mesomorph';
+                bodyTypeDescription = `
+                    <p><strong>Mesomorph:</strong> Mesomorphs have a naturally athletic build with broad shoulders and a narrow waist. They tend to gain muscle easily and have a well-defined physique. Mesomorphs have a muscular body, medium-sized joints, and a balanced distribution of body fat. They should combine strength training with cardiovascular exercises to maintain muscle mass and overall fitness. A balanced diet with a mix of proteins, carbohydrates, and fats is ideal.</p>`;
+            } else if (shoulderWidth < hipWidth && waistWidth < hipWidth) {
+                bodyType = 'Endomorph';
+                bodyTypeDescription = `
+                    <p><strong>Endomorph:</strong> Endomorphs have a rounder and softer body with a higher percentage of body fat. They tend to gain weight easily, especially in the lower body. Endomorphs have wider hips, a larger bone structure, and a slower metabolism. They should focus on a combination of strength training and cardio exercises to manage weight and improve muscle tone. A diet rich in lean proteins, vegetables, and whole grains can help control body fat.</p>`;
+            } else {
+                bodyType = 'Ectomorph';
+                bodyTypeDescription = `
+                    <p><strong>Ectomorph:</strong> Ectomorphs typically have a slim and lean build with narrow shoulders and hips. They have a fast metabolism, which makes it difficult for them to gain weight or muscle. They have long limbs, small joints, and a low body fat percentage. Ectomorphs should focus on strength training to build muscle mass and include calorie-dense foods in their diet to support weight gain.</p>`;
             }
-            
-            document.getElementById('alternativeResult').innerHTML = alternative;
+
+            document.getElementById('bodyTypeResult').innerText = `Your body type is ${bodyType}.`;
+            document.getElementById('bodyTypeDescription').innerHTML = bodyTypeDescription;
         }
     </script>
 </body>
 </html>
-```
