@@ -1,0 +1,176 @@
+Sure! Here's the updated HTML code with the text style set to Times New Roman:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Food Alternatives</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #e0f7e9; /* Light green background */
+            font-family: 'Times New Roman', Times, serif; /* Times New Roman font */
+        }
+        header, footer {
+            text-align: center;
+            padding: 1em;
+            background-color: #4caf50; /* Darker green for header and footer */
+            color: white;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        .bmi-section, .alternative-section {
+            background-color: #ffffff; /* White background for sections */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .food-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .food-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Healthy Food Alternatives</h1>
+        <nav>
+            <ul>
+                <li><a href="#alternatives">Food Alternatives</a></li>
+                <li><a href="#bmi">BMI Calculator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="alternatives" class="alternative-section">
+            <h2>Find Healthy Alternatives</h2>
+            <form id="alternativeForm">
+                <label for="junkFood">Select Junk Food:</label>
+                <select id="junkFood" name="junkFood" onchange="showAlternative()">
+                    <option value="">--Select--</option>
+                    <option value="potatoChips">Potato Chips</option>
+                    <option value="soda">Soda</option>
+                    <option value="burger">Burger</option>
+                    <!-- Add more options here -->
+                </select>
+            </form>
+            <div id="alternativeResult"></div>
+        </section>
+        <section id="bmi" class="bmi-section">
+            <h2>Calculate Your BMI</h2>
+            <form id="bmiForm">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" name="height" required>
+                <br>
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required>
+                <br>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br>
+                <button type="button" onclick="calculateBMI()">Calculate BMI</button>
+            </form>
+            <p id="bmiResult"></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Healthy Food Alternatives</p>
+    </footer>
+    <script>
+        function calculateBMI() {
+            const height = document.getElementById('height').value / 100; // Convert cm to meters
+            const weight = document.getElementById('weight').value;
+            const bmi = (weight / (height * height)).toFixed(2);
+            
+            let bmiMessage = `Your BMI is ${bmi}. `;
+            
+            if (bmi < 18.5) {
+                bmiMessage += "You are underweight. Consider consulting a healthcare provider for advice on gaining weight healthily.";
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                bmiMessage += "You have a normal weight. Keep up the good work maintaining a healthy lifestyle!";
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                bmiMessage += "You are overweight. Consider consulting a healthcare provider for advice on losing weight healthily.";
+            } else {
+                bmiMessage += "You are obese. Consider consulting a healthcare provider for advice on losing weight healthily.";
+            }
+
+            document.getElementById('bmiResult').innerText = bmiMessage;
+        }
+
+        function showAlternative() {
+            const junkFood = document.getElementById('junkFood').value;
+            let alternative = '';
+            
+            switch (junkFood) {
+                case 'potatoChips':
+                    alternative = `
+                        <div class="food-item">
+                            <img src="https://via.placeholder.com/100?text=Potato+Chips" alt="Potato Chips">
+                            <div>
+                                <p>Alternative: Baked Kale Chips</p>
+                                <p>Why: Kale chips are lower in calories and higher in nutrients.</p>
+                                <img src="https://via.placeholder.com/100?text=Kale+Chips" alt="Kale Chips">
+                            </div>
+                        </div>`;
+                    break;
+                case 'soda':
+                    alternative = `
+                        <div class="food-item">
+                            <img src="https://via.placeholder.com/100?text=Soda" alt="Soda">
+                            <div>
+                                <p>Alternative: Sparkling Water with Lemon</p>
+                                <p>Why: Sparkling water is free of added sugars and calories.</p>
+                                <img src="https://via.placeholder.com/100?text=Sparkling+Water" alt="Sparkling Water">
+                            </div>
+                        </div>`;
+                    break;
+                case 'burger':
+                    alternative = `
+                        <div class="food-item">
+                            <img src="https://via.placeholder.com/100?text=Burger" alt="Burger">
+                            <div>
+                                <p>Alternative: Grilled Chicken Sandwich</p>
+                                <p>Why: Grilled chicken is lower in fat and calories compared to a beef burger.</p>
+                                <img src="https://via.placeholder.com/100?text=Grilled+Chicken" alt="Grilled Chicken Sandwich">
+                            </div>
+                        </div>`;
+                    break;
+                // Add more cases here
+                default:
+                    alternative = 'Please select a junk food item to see its healthy alternative.';
+            }
+            
+            document.getElementById('alternativeResult').innerHTML = alternative;
+        }
+    </script>
+</body>
+</html>
+```
